@@ -1,6 +1,7 @@
 import hashlib
 import random
 import time
+import matplotlib.pyplot as plt
 
 
 class Block:
@@ -117,23 +118,40 @@ if __name__ == "__main__":
     spentA, tpA = Algorand()
     spentT, tpT = Algorand()
 
+    print("====Ouroboros\n")
 
-    #print("test")
     print("Mining time: ", sum(spent) / len(spent))
     print("\nAvg throughput: ", sum(tp) / len(tp))
 
-    print("\n====Alg\n")
+    print("\n====Algorand\n")
 
     print("Mining time: ", sum(spentA) / len(spentA))
     print("\nAvg throughput: ", sum(tpA) / len(tpA))
 
-    print("\n====Tender\n")
+    print("\n====Tendermint\n")
 
     print("Mining time: ", sum(spentT) / len(spentT))
     print("\nAvg throughput: ", sum(tpT) / len(tpT))
 
+    avgMining = [sum(spent) / len(spent), sum(spentA) / len(spentA), sum(spentT) / len(spentT)]
 
+    algs = ["Ouroboros", "Algorand", "Tendermint"]
 
+    plt.figure()
+    plt.bar(algs, avgMining)
+    plt.xlabel("(Algorithms)")
+    plt.ylabel("Avg Mining time (sec)")
+    plt.title("Avg mining time comparison")
+    plt.show()
+
+    avgThroughput = [sum(tp) / len(tp), sum(tpA) / len(tpA), sum(tpT) / len(tpT)]
+
+    plt.figure()
+    plt.bar(algs, avgThroughput)
+    plt.xlabel("(Algorithms)")
+    plt.ylabel("Avg Throughput (sec)")
+    plt.title("Avg Throughput comparison")
+    plt.show()
 
 
 
