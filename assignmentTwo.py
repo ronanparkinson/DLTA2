@@ -3,7 +3,8 @@ import random
 import time
 import matplotlib.pyplot as plt
 
-
+#This is where each of the blocks in a blockchain gets generated and hashed.
+#Metadata is stored here too.
 class Block:
     def __init__(self, index, prevBlock, singleBlock, top, transactions):
         self.index = index
@@ -17,6 +18,8 @@ class Block:
 
         self.hash = hashlib.sha256(blockHash.encode()).hexdigest()
 
+#validators selected along with their stake
+#higher stake increases chances of being slected
 def Ouroboros(validators=10, blocks=50):
     stakeshares = {f"Validator {i}": random.randint(1, 100) for i in range(validators)}
     totalShareStakes = sum(stakeshares.values())
@@ -54,7 +57,8 @@ def Ouroboros(validators=10, blocks=50):
 
     return blockSpent, TP
 
-
+#random committee is selected each time
+#one validator is randomly selected
 def Algorand(validators=10, blocks=50):
     AllValidators = [f"Validator {i}" for i in range(validators)]
     blockSpent = []
@@ -85,6 +89,8 @@ def Algorand(validators=10, blocks=50):
 
     return blockSpent, TP
 
+#validators propose blocks each round
+#delays are caused by voting
 def Tendermint(validators=10, blocks=50):
     AllValidators = [f"Validator {i}" for i in range(validators)]
     blockSpent = []
@@ -112,11 +118,14 @@ def Tendermint(validators=10, blocks=50):
 
         prevHash = block.hash
 
+    return blockSpent, TP
+
+
 
 if __name__ == "__main__":
     spent, tp = Ouroboros()
     spentA, tpA = Algorand()
-    spentT, tpT = Algorand()
+    spentT, tpT = Tendermint()
 
     print("====Ouroboros\n")
 
